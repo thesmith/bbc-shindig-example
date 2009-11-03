@@ -23,30 +23,31 @@ import com.google.inject.name.Names;
 
 /**
  * Example GuiceModule binds everything together
+ * 
  * @author bens
  */
 public class GuiceModule extends SocialApiGuiceModule {
-	
-	@Override
+
+  @Override
   protected void configure() {
-		super.configure();
-		bind(String.class).annotatedWith(Names.named("shindig.canonical.json.db"))
-    		.toInstance("sampledata/canonicaldb.json");
-    
+    super.configure();
+    bind(String.class).annotatedWith(Names.named("shindig.canonical.json.db"))
+        .toInstance("sampledata/canonicaldb.json");
+
     bind(ActivityService.class).to(JsonDbServiceExample.class);
     bind(AppDataService.class).to(JsonDbServiceExample.class);
     bind(PersonService.class).to(JsonDbServiceExample.class);
     bind(MessageService.class).to(JsonDbServiceExample.class);
     bind(RelationshipService.class).to(JsonDbServiceExample.class);
-    
+
     bind(OAuthDataStore.class).to(SampleOAuthDataStore.class);
 
     requestStaticInjection(SampleRealm.class);
-	}
-	
-	@Override
+  }
+
+  @Override
   protected Set<Object> getHandlers() {
-		return ImmutableSet.<Object>of(ActivityHandler.class, AppDataHandler.class,
-        PersonHandlerImpl.class, MessageHandler.class);
+    return ImmutableSet.<Object> of(ActivityHandler.class,
+        AppDataHandler.class, PersonHandlerImpl.class, MessageHandler.class);
   }
 }

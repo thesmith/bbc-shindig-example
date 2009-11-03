@@ -49,32 +49,38 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 
 /**
- * Duplication of https://svn.apache.org/repos/asf/incubator/shindig/trunk/java/social-api/src/test/java/org/apache/shindig/social/dataservice/integration/RestfulJsonPeopleTest.java
- * Added create friends to show how to extend interface
+ * Duplication of
+ * https://svn.apache.org/repos/asf/incubator/shindig/trunk/java/social
+ * -api/src/test/java/org/apache/shindig/social/dataservice/integration/
+ * RestfulJsonPeopleTest.java Added create friends to show how to extend
+ * interface
+ * 
  * @author bens
  */
 public class RestfulJsonPeopleTest extends AbstractLargeRestfulTests {
   private Person canonical;
 
-  @SuppressWarnings({ "unchecked", "boxing" })
+  @SuppressWarnings( { "unchecked", "boxing" })
   @Override
   protected void setUp() throws Exception {
-    Injector injector = Guice.createInjector(new PropertiesModule(), new GuiceModule());
+    Injector injector = Guice.createInjector(new PropertiesModule(),
+        new GuiceModule());
     this.setResponse(EasyMock.createMock(HttpServletResponse.class));
-    
+
     // Set data service servlet
     DataServiceServlet servlet = new DataServiceServlet();
     HandlerRegistry dispatcher = injector.getInstance(HandlerRegistry.class);
-    dispatcher.addHandlers(injector.getInstance(Key.get(new TypeLiteral<Set<Object>>(){},
-        Names.named("org.apache.shindig.social.handlers"))));
-    
+    dispatcher.addHandlers(injector.getInstance(Key.get(
+        new TypeLiteral<Set<Object>>() {
+        }, Names.named("org.apache.shindig.social.handlers"))));
+
     servlet.setHandlerRegistry(dispatcher);
     servlet.setBeanConverters(new BeanJsonConverter(injector),
         new BeanXStreamConverter(new XStream081Configuration(injector)),
         new BeanXStreamAtomConverter(new XStream081Configuration(injector)));
     this.setServlet(servlet);
     assertNotNull(servlet);
-    
+
     NameImpl name = new NameImpl("Sir Shin H. Digg Social Butterfly");
     name.setAdditionalName("H");
     name.setFamilyName("Digg");
@@ -86,7 +92,8 @@ public class RestfulJsonPeopleTest extends AbstractLargeRestfulTests {
     canonical.setAboutMe("I have an example of every piece of data");
     canonical.setActivities(Lists.newArrayList("Coding Shindig"));
 
-    Address address = new AddressImpl("PoBox 3565, 1 OpenStandards Way, Apache, CA");
+    Address address = new AddressImpl(
+        "PoBox 3565, 1 OpenStandards Way, Apache, CA");
     address.setCountry("US");
     address.setLatitude(28.3043F);
     address.setLongitude(143.0859F);
@@ -107,7 +114,8 @@ public class RestfulJsonPeopleTest extends AbstractLargeRestfulTests {
     bodyType.setWeight(74F);
     canonical.setBodyType(bodyType);
 
-    canonical.setBooks(Lists.newArrayList("The Cathedral & the Bazaar", "Catch 22"));
+    canonical.setBooks(Lists.newArrayList("The Cathedral & the Bazaar",
+        "Catch 22"));
     canonical.setCars(Lists.newArrayList("beetle", "prius"));
     canonical.setChildren("3");
     AddressImpl location = new AddressImpl();
@@ -117,7 +125,8 @@ public class RestfulJsonPeopleTest extends AbstractLargeRestfulTests {
 
     canonical.setBirthday(new Date());
     canonical.setDrinker(new EnumImpl<Drinker>(Drinker.SOCIALLY));
-    ListField email = new ListFieldImpl("work", "shindig-dev@incubator.apache.org");
+    ListField email = new ListFieldImpl("work",
+        "shindig-dev@incubator.apache.org");
     canonical.setEmails(Lists.newArrayList(email));
 
     canonical.setEthnicity("developer");
@@ -126,7 +135,8 @@ public class RestfulJsonPeopleTest extends AbstractLargeRestfulTests {
     canonical.setGender(Person.Gender.male);
     canonical.setHappiestWhen("coding");
     canonical.setHasApp(true);
-    canonical.setHeroes(Lists.newArrayList("Doug Crockford", "Charles Babbage"));
+    canonical
+        .setHeroes(Lists.newArrayList("Doug Crockford", "Charles Babbage"));
     canonical.setHumor("none to speak of");
     canonical.setInterests(Lists.newArrayList("PHP", "Java"));
     canonical.setJobInterests("will work for beer");
@@ -160,26 +170,30 @@ public class RestfulJsonPeopleTest extends AbstractLargeRestfulTests {
     canonical.setOrganizations(Lists.newArrayList(job1, job2));
 
     canonical.setUpdated(new Date());
-    canonical.setLanguagesSpoken(Lists.newArrayList("English", "Dutch", "Esperanto"));
+    canonical.setLanguagesSpoken(Lists.newArrayList("English", "Dutch",
+        "Esperanto"));
     canonical.setLivingArrangement("in a house");
-    Enum<LookingFor> lookingForRandom =
-        new EnumImpl<LookingFor>(LookingFor.RANDOM, "Random");
-    Enum<LookingFor> lookingForNetworking =
-        new EnumImpl<LookingFor>(LookingFor.NETWORKING, "Networking");
-    canonical.setLookingFor(Lists.newArrayList(lookingForRandom, lookingForNetworking));
+    Enum<LookingFor> lookingForRandom = new EnumImpl<LookingFor>(
+        LookingFor.RANDOM, "Random");
+    Enum<LookingFor> lookingForNetworking = new EnumImpl<LookingFor>(
+        LookingFor.NETWORKING, "Networking");
+    canonical.setLookingFor(Lists.newArrayList(lookingForRandom,
+        lookingForNetworking));
     canonical.setMovies(Lists.newArrayList("Iron Man", "Nosferatu"));
     canonical.setMusic(Lists.newArrayList("Chieftains", "Beck"));
-    canonical.setNetworkPresence(new EnumImpl<NetworkPresence>(NetworkPresence.ONLINE));
+    canonical.setNetworkPresence(new EnumImpl<NetworkPresence>(
+        NetworkPresence.ONLINE));
     canonical.setNickname("diggy");
     canonical.setPets("dog,cat");
-    canonical.setPhoneNumbers(Lists.<ListField> newArrayList(new ListFieldImpl("work",
-        "111-111-111"), new ListFieldImpl("mobile", "999-999-999")));
+    canonical.setPhoneNumbers(Lists.<ListField> newArrayList(new ListFieldImpl(
+        "work", "111-111-111"), new ListFieldImpl("mobile", "999-999-999")));
 
     canonical.setPoliticalViews("open leaning");
-    canonical.setProfileSong(new UrlImpl("http://www.example.org/songs/OnlyTheLonely.mp3",
-        "Feelin' blue", "road"));
-    canonical.setProfileVideo(new UrlImpl("http://www.example.org/videos/Thriller.flv",
-        "Thriller", "video"));
+    canonical.setProfileSong(new UrlImpl(
+        "http://www.example.org/songs/OnlyTheLonely.mp3", "Feelin' blue",
+        "road"));
+    canonical.setProfileVideo(new UrlImpl(
+        "http://www.example.org/videos/Thriller.flv", "Thriller", "video"));
 
     canonical.setQuotes(Lists.newArrayList("I am therfore I code", "Doh!"));
     canonical.setRelationshipStatus("married to my job");
@@ -197,11 +211,13 @@ public class RestfulJsonPeopleTest extends AbstractLargeRestfulTests {
     canonical.setTurnOns(Lists.newArrayList("well document code"));
     canonical.setTvShows(Lists.newArrayList("House", "Battlestar Galactica"));
 
-    canonical.setUrls(Lists.<Url>newArrayList(
-        new UrlImpl("http://www.example.org/?id=1", "my profile", "Profile"),
-        new UrlImpl("http://www.example.org/pic/?id=1", "my awesome picture", "Thumbnail")));
+    canonical
+        .setUrls(Lists.<Url> newArrayList(new UrlImpl(
+            "http://www.example.org/?id=1", "my profile", "Profile"),
+            new UrlImpl("http://www.example.org/pic/?id=1",
+                "my awesome picture", "Thumbnail")));
   }
-  
+
   @Test
   public void testCreateFriends() throws Exception {
     Map<String, String> extraParams = Maps.newHashMap();
@@ -213,8 +229,8 @@ public class RestfulJsonPeopleTest extends AbstractLargeRestfulTests {
     extraParams.put("fields", null);
 
     // Currently, for Shindig @all == @friends
-    String resp = getResponse("/people/john.doe/@friends", "GET", extraParams, null,
-        ContentTypes.OUTPUT_JSON_CONTENT_TYPE);
+    String resp = getResponse("/people/john.doe/@friends", "GET", extraParams,
+        null, ContentTypes.OUTPUT_JSON_CONTENT_TYPE);
     JSONObject result = getJson(resp);
 
     assertEquals(3, result.getInt("totalResults"));
@@ -225,22 +241,22 @@ public class RestfulJsonPeopleTest extends AbstractLargeRestfulTests {
     // The users should be in alphabetical order
     assertPerson(people.getJSONObject(0), "george.doe", "George Doe");
     assertPerson(people.getJSONObject(1), "jane.doe", "Jane Doe");
-    
+
     String postData = "{id: 'canonical'}";
     resp = getResponse("/people/john.doe/@friends", "POST", postData, null,
         ContentTypes.OUTPUT_JSON_CONTENT_TYPE);
-    
+
     resp = getResponse("/people/john.doe/@friends", "GET", extraParams, null,
         ContentTypes.OUTPUT_JSON_CONTENT_TYPE);
     result = getJson(resp);
 
     assertEquals(4, result.getInt("totalResults"));
   }
-  
-  private void assertPerson(JSONObject person, String expectedId, String expectedName)
-      throws Exception {
+
+  private void assertPerson(JSONObject person, String expectedId,
+      String expectedName) throws Exception {
     assertEquals(expectedId, person.getString("id"));
-    assertEquals(expectedName, person.getJSONObject("name").getString("formatted"));
+    assertEquals(expectedName, person.getJSONObject("name").getString(
+        "formatted"));
   }
 }
-

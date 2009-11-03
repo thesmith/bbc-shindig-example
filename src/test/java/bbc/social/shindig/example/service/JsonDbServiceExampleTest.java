@@ -26,22 +26,24 @@ import com.google.inject.Injector;
 
 /**
  * Tests the example implementation of extended shindig service
+ * 
  * @author bens
  */
 public class JsonDbServiceExampleTest {
-	private static final UserId JOHN_DOE = new UserId(UserId.Type.userId, "john.doe");
-	private SecurityToken token = new FakeGadgetToken();
-	private JsonDbServiceExample service;
-	
-	@Before
+  private static final UserId JOHN_DOE = new UserId(UserId.Type.userId,
+      "john.doe");
+  private SecurityToken token = new FakeGadgetToken();
+  private JsonDbServiceExample service;
+
+  @Before
   public void setUp() throws Exception {
     Injector injector = Guice.createInjector(new SocialApiTestsGuiceModule());
     service = injector.getInstance(JsonDbServiceExample.class);
   }
-	
-	@Test
-	public void shouldCreateFriendship() throws Exception {
-		CollectionOptions options = new CollectionOptions();
+
+  @Test
+  public void shouldCreateFriendship() throws Exception {
+    CollectionOptions options = new CollectionOptions();
     options.setSortBy(PersonService.TOP_FRIENDS_SORT);
     options.setSortOrder(SortOrder.ascending);
     options.setFilter(null);
@@ -52,18 +54,18 @@ public class JsonDbServiceExampleTest {
 
     RestfulCollection<Person> responseItem = service.getPeople(
         ImmutableSet.of(JOHN_DOE), new GroupId(GroupId.Type.friends, null),
-        options, Collections.<String>emptySet(), token).get();
+        options, Collections.<String> emptySet(), token).get();
     assertNotNull(responseItem);
     assertEquals(3, responseItem.getTotalResults());
     // Test a couple of users
     assertEquals("jane.doe", responseItem.getEntry().get(0).getId());
-    
+
     service.createRelationship("john.doe", "canonical");
-    
-    responseItem = service.getPeople(
-        ImmutableSet.of(JOHN_DOE), new GroupId(GroupId.Type.friends, null),
-        options, Collections.<String>emptySet(), token).get();
+
+    responseItem = service.getPeople(ImmutableSet.of(JOHN_DOE),
+        new GroupId(GroupId.Type.friends, null), options,
+        Collections.<String> emptySet(), token).get();
     assertNotNull(responseItem);
     assertEquals(4, responseItem.getTotalResults());
-	}
+  }
 }

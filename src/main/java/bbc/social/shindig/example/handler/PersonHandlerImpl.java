@@ -26,40 +26,40 @@ import com.google.inject.Inject;
  */
 @Service(name = "people", path = "/{userId}+/{groupId}/{personId}+")
 public class PersonHandlerImpl extends PersonHandler {
-	private final RelationshipService relationshipService;
+  private final RelationshipService relationshipService;
 
-	@Inject
-	public PersonHandlerImpl(PersonService personService,
-	    RelationshipService relationshipService, ContainerConfig config) {
-		super(personService, config);
-		this.relationshipService = relationshipService;
-	}
+  @Inject
+  public PersonHandlerImpl(PersonService personService,
+      RelationshipService relationshipService, ContainerConfig config) {
+    super(personService, config);
+    this.relationshipService = relationshipService;
+  }
 
-	/**
-	 * Create a new friendship between 2 users POST - {id: 'friendId'}
-	 * /people/{userId}/@friends
-	 * 
-	 * @param request
-	 * @return
-	 * @throws ProtocolException
-	 */
-	@Operation(httpMethods = "POST", path = "/{userId}+/@friends")
-	public Future<?> createFriends(SocialRequestItem request)
-	    throws ProtocolException {
-		Set<UserId> userIds = request.getUsers();
-		Person person = request.getTypedParameter("body", Person.class);
-		HandlerPreconditions.requireNotEmpty(userIds, "No userId specified");
-		HandlerPreconditions.requireSingular(userIds,
-		    "Multiple userIds not supported");
+  /**
+   * Create a new friendship between 2 users POST - {id: 'friendId'}
+   * /people/{userId}/@friends
+   * 
+   * @param request
+   * @return
+   * @throws ProtocolException
+   */
+  @Operation(httpMethods = "POST", path = "/{userId}+/@friends")
+  public Future<?> createFriends(SocialRequestItem request)
+      throws ProtocolException {
+    Set<UserId> userIds = request.getUsers();
+    Person person = request.getTypedParameter("body", Person.class);
+    HandlerPreconditions.requireNotEmpty(userIds, "No userId specified");
+    HandlerPreconditions.requireSingular(userIds,
+        "Multiple userIds not supported");
 
-		if (person == null || person.getId() == null || person.getId().length() < 1) {
-			throw new IllegalArgumentException(
-			    "Cannot create relationship without a person to befriend");
-		}
-		UserId userId = userIds.iterator().next();
-		this.relationshipService.createRelationship(userId.getUserId(request
-		    .getToken()), person.getId());
+    if (person == null || person.getId() == null || person.getId().length() < 1) {
+      throw new IllegalArgumentException(
+          "Cannot create relationship without a person to befriend");
+    }
+    UserId userId = userIds.iterator().next();
+    this.relationshipService.createRelationship(userId.getUserId(request
+        .getToken()), person.getId());
 
-		return ImmediateFuture.newInstance(null);
-	}
+    return ImmediateFuture.newInstance(null);
+  }
 }
