@@ -1,8 +1,6 @@
+This project shows how you can extend the Shindig REST API by allowing clients to create new relationships. This is explained in an upcoming blog-post, which I will link to.
 
-Installing and running the bbc-shindig-example
-=================================================
-
-This is a shindig samples project showcasing spring integration into a mock social shindig implementation.
+The code borrows librally from the Shindig codebase: http://svn.apache.org/repos/asf/incubator/shindig/trunk/ along with tutorials such as http://cwiki.apache.org/SHINDIG/shindig-spring-example.html
 
 Steps to install and run bbc-shindig-example
  1. Open a command-prompt, and 'cd' to where bbc-shindig-example code is (e.g. cd ~/src/bbc-shindig-example)
@@ -11,3 +9,4 @@ Steps to install and run bbc-shindig-example
  4. Open a browser and try the following URLs:
     - http://localhost:8080/social/rest/people/canonical/@self?format=xml
     - http://localhost:8080/social/rest/people/canonical/@friends?format=xml
+    - POST {id: 'canonical'} http://localhost:8080/social/rest/people/john.doe/@friends
