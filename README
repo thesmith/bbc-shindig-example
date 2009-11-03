@@ -1,0 +1,13 @@
+
+Installing and running the bbc-shindig-example
+=================================================
+
+This is a shindig samples project showcasing spring integration into a mock social shindig implementation.
+
+Steps to install and run bbc-shindig-example
+ 1. Open a command-prompt, and 'cd' to where bbc-shindig-example code is (e.g. cd ~/src/bbc-shindig-example)
+ 2. mvn install
+ 3. mvn jetty:run
+ 4. Open a browser and try the following URLs:
+    - http://localhost:8080/social/rest/people/canonical/@self?format=xml
+    - http://localhost:8080/social/rest/people/canonical/@friends?format=xml
