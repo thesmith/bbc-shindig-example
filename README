@@ -1,4 +1,4 @@
-This project shows how you can extend the Shindig REST API by allowing clients to create new relationships. This is explained in an upcoming blog-post, which I will link to.
+This project shows how you can extend the Shindig REST API by allowing clients to create new relationships. This is explained in this blog post: http://www.bbc.co.uk/blogs/webdeveloper/2009/11/extending-opensocial-and-shind.shtml.
 
 The code borrows librally from the Shindig codebase: http://svn.apache.org/repos/asf/incubator/shindig/trunk/ along with tutorials such as http://cwiki.apache.org/SHINDIG/shindig-spring-example.html
 
